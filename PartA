@@ -1,6 +1,8 @@
+import re
+
 
 def tokenize():
-    file_name = "example1.txt"
+    file_name = "smallExample.txt"
 
     # Opens the specified file
     file = open(file_name)
@@ -9,8 +11,14 @@ def tokenize():
     words = []
 
     for line in file:
-        for word in line.split():
-            print(word)
+        for token in re.split('[-.,]', line):
+            words.append(token)
+
+
+
+
+    for tks in words:
+        print('\n' + tks)
 
 if __name__ == '__main__':
     tokenize()
