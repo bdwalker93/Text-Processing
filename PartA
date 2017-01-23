@@ -1,0 +1,10 @@
+
+def tokenize:
+    file_name = "example1.txt"
+    file = open(file_name)
+
+    for line in file:
+        tok = line
+
+if __name__ == '__main__':
+    tokenize()
