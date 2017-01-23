@@ -4,7 +4,8 @@ def tokenize:
     file = open(file_name)
 
     for line in file:
-        tok = line
+        for word in line.split(' '):
+            print(word)
 
 if __name__ == '__main__':
     tokenize()
