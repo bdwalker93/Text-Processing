@@ -10,15 +10,17 @@ def tokenize():
     # Stores all of the words read in from the input file
     words = []
 
+    # We split on anything that is not a comma, letter (case sensitive), or apostrophe
     for line in file:
-        for token in re.split('[-.,]', line):
+        for token in re.split('[^a-zA-Z0-9\']', line):
             words.append(token)
 
+    return words
 
+def computeWordFrequencies():
 
+    hello = ""
 
-    for tks in words:
-        print('\n' + tks)
 
 if __name__ == '__main__':
     tokenize()
