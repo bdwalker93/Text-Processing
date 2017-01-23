@@ -1,10 +1,15 @@
 
-def tokenize:
+def tokenize():
     file_name = "example1.txt"
+
+    # Opens the specified file
     file = open(file_name)
 
+    # Stores all of the words read in from the input file
+    words = []
+
     for line in file:
-        for word in line.split(' '):
+        for word in line.split():
             print(word)
 
 if __name__ == '__main__':
