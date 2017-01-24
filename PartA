@@ -1,29 +1,26 @@
 import re
 
 # Reads input from the specified file and tokenizes all words within it
-def tokenize(file_name: str) -> {str, int}:
+def tokenize(file_name: str) -> [str]:
     # Opens the specified file
     file = open(file_name)
 
-    # Stores all of the word frequencies in a map
-    frequency_map = {}
+    # Stores all of the words read in from the input file
+    words = []
 
     # We split on anything that is not a comma, letter (case sensitive), or apostrophe
     for line in file:
+        #words += re.split('[^a-zA-Z0-9\']', line)
         for token in re.split('[^a-zA-Z0-9\']', line):
 
             # Multiple split chars in a row cause an empty token to be shown
             if token:
-                if token in frequency_map:
-                    frequency_map[token] += 1
-                else:
-                    frequency_map[token] = 1
-
+                words.append(token.lower())
 
     # Close the input stream
     file.close()
 
-    return frequency_map
+    return words
 
 # Counts the frequency of words in the list passed in
 def computeWordFrequencies(words: [str]) -> {str, int}:
