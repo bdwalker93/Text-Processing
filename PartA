@@ -58,3 +58,6 @@ if __name__ == '__main__':
 
         print("\n")
         count += 1
+
+    if len(sys.argv) < 2:
+        print("Pass input file as command line argument!")
