@@ -1,25 +1,30 @@
+import sys
 import re
 
 # Reads input from the specified file and tokenizes all words within it
 def tokenize(file_name: str) -> [str]:
-    # Opens the specified file
-    file = open(file_name)
+    try:
+        # Opens the specified file
+        file = open(file_name, 'r')
 
-    # Stores all of the words read in from the input file
-    words = []
+        # Stores all of the words read in from the input file
+        words = []
 
-    # We split on anything that is not a comma, letter (case sensitive), or apostrophe
-    for line in file:
-        for token in re.split('[^a-zA-Z0-9\']', line):
+        # We split on anything that is not a comma, letter (case sensitive), or apostrophe
+        for line in file:
+            for token in re.split('[^a-zA-Z0-9\']', line):
 
-            # Multiple split chars in a row cause an empty token to be shown
-            if token:
-                words.append(token.lower())
+                # Multiple split chars in a row cause an empty token to be shown
+                if token:
+                    words.append(token.lower())
 
-    # Close the input stream
-    file.close()
+        # Close the input stream
+        file.close()
 
-    return words
+        return words
+
+    except:
+        raise
 
 # Counts the frequency of words in the list passed in
 def computeWordFrequencies(words: [str]) -> {str, int}:
@@ -41,5 +46,15 @@ def printFrequencies(frequency_map: {str, int}):
         print(k, "->", frequency_map[k])
 
 if __name__ == '__main__':
-   # printFrequencies(computeWordFrequencies(tokenize("C:\\Users\\Brett\\Desktop\\example2.txt")))
-    printFrequencies(computeWordFrequencies(tokenize("smallExample.txt")))
+    # Argument counter
+    count = 1
+
+    # loops through all the input files
+    while count < len(sys.argv):
+        try:
+            printFrequencies(computeWordFrequencies(tokenize(str(sys.argv[count]))))
+        except:
+            print("Error! The following file does not exist:", str(sys.argv[count]))
+
+        print("\n")
+        count += 1
