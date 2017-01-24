@@ -1,26 +1,49 @@
 import re
 
-
-def tokenize():
-    file_name = "smallExample.txt"
-
+# Reads input from the specified file and tokenizes all words within it
+def tokenize(file_name: str) -> {str, int}:
     # Opens the specified file
     file = open(file_name)
 
-    # Stores all of the words read in from the input file
-    words = []
+    # Stores all of the word frequencies in a map
+    frequency_map = {}
 
     # We split on anything that is not a comma, letter (case sensitive), or apostrophe
     for line in file:
         for token in re.split('[^a-zA-Z0-9\']', line):
-            words.append(token)
 
-    return words
+            # Multiple split chars in a row cause an empty token to be shown
+            if token:
+                if token in frequency_map:
+                    frequency_map[token] += 1
+                else:
+                    frequency_map[token] = 1
 
-def computeWordFrequencies():
 
-    hello = ""
+    # Close the input stream
+    file.close()
 
+    return frequency_map
+
+# Counts the frequency of words in the list passed in
+def computeWordFrequencies(words: [str]) -> {str, int}:
+
+    # A map to store all key-pair values of word frequencies
+    frequency_map = {}
+
+    for word in words:
+        if word in frequency_map:
+            frequency_map[word] += 1
+        else:
+            frequency_map[word] = 1
+
+    return frequency_map
+
+# Prints word frequencies in decreasing order
+def printFrequencies(frequency_map: {str, int}):
+    for k in sorted(frequency_map, key=frequency_map.get, reverse=True):
+        print(k, "->", frequency_map[k])
 
 if __name__ == '__main__':
-    tokenize()
+   # printFrequencies(computeWordFrequencies(tokenize("C:\\Users\\Brett\\Desktop\\example2.txt")))
+    printFrequencies(computeWordFrequencies(tokenize("smallExample.txt")))
