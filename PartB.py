@@ -1,7 +1,7 @@
 import re
 
 # Reads input from the specified file and tokenizes all words within it
-def tokenize(file_name: str) -> {str, int}:
+def generateTokenFrequencyMap(file_name: str) -> {str, int}:
     # Opens the specified file
     file = open(file_name)
 
@@ -14,11 +14,10 @@ def tokenize(file_name: str) -> {str, int}:
 
             # Multiple split chars in a row cause an empty token to be shown
             if token:
-                if token in frequency_map:
-                    frequency_map[token] += 1
+                if token.lower() in frequency_map:
+                    frequency_map[token.lower()] += 1
                 else:
-                    frequency_map[token] = 1
-
+                    frequency_map[token.lower()] = 1
 
     # Close the input stream
     file.close()
@@ -26,9 +25,11 @@ def tokenize(file_name: str) -> {str, int}:
     return frequency_map
 
 
-
-
+# Prints word frequencies in decreasing order
+def printFrequencies(frequency_map: {str, int}):
+    for k in sorted(frequency_map, key=frequency_map.get, reverse=True):
+        print(k, "->", frequency_map[k])
 
 if __name__ == '__main__':
     # printFrequencies(computeWordFrequencies(tokenize("C:\\Users\\Brett\\Desktop\\example2.txt")))
-    printFrequencies(computeWordFrequencies(tokenize("smallExample.txt")))
+    printFrequencies(generateTokenFrequencyMap("smallExample.txt"))
