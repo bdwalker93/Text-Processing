@@ -16,9 +16,7 @@ def generateTokenFrequencyMap(file_name1: str) -> {str, int}:
 
                 # Multiple split chars in a row cause an empty token to be shown
                 if token:
-                    if token.lower() in frequency_map:
-                        frequency_map[token.lower()] += 1
-                    else:
+                    if token.lower() not in frequency_map:
                         frequency_map[token.lower()] = 1
 
         # Close the input stream
@@ -44,8 +42,8 @@ def determineIntersections(file_name2: str, frequency_map: {str, int}) -> int:
 
                 # Multiple split chars in a row cause an empty token to be shown
                 if token:
-                    if token.lower() in frequency_map and frequency_map[token.lower()] > 0:
-                        frequency_map[token.lower()] = -1
+                    if token.lower() in frequency_map:
+                        del frequency_map[token.lower()]
                         total_intersections += 1
 
                         # Prints the common tokens
