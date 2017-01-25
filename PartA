@@ -2,13 +2,16 @@ import sys
 import re
 
 # Reads input from the specified file and tokenizes all words within it
-def tokenize(file_name: str) -> [str]:
+def tokenize(file_name: str) -> {str, int}:
     try:
         # Opens the specified file
         file = open(file_name, 'r')
 
         # Stores all of the words read in from the input file
         words = []
+
+        # A map to store all key-pair values of word frequencies
+        frequency_map = {}
 
         # We split on anything that is not a comma, letter (case sensitive), or apostrophe
         for line in file:
@@ -18,19 +21,26 @@ def tokenize(file_name: str) -> [str]:
                 if token:
                     words.append(token.lower())
 
+            # We dump the array every 1000000 tokens to avoid a memory overflow
+            if len(words) > 1000000:
+                frequency_map = computeWordFrequencies(words, frequency_map)
+
+                # Clear our word list
+                words.clear()
+
         # Close the input stream
         file.close()
 
-        return words
+        # Dump the remaining list remnants into the map
+        frequency_map = computeWordFrequencies(words, frequency_map)
+
+        return frequency_map
 
     except:
         raise
 
 # Counts the frequency of words in the list passed in
-def computeWordFrequencies(words: [str]) -> {str, int}:
-
-    # A map to store all key-pair values of word frequencies
-    frequency_map = {}
+def computeWordFrequencies(words: [str], frequency_map: {str, int}) -> {str, int}:
 
     for word in words:
         if word in frequency_map:
@@ -52,8 +62,8 @@ if __name__ == '__main__':
     # loops through all the input files
     while count < len(sys.argv):
         try:
-            printFrequencies(computeWordFrequencies(tokenize(str(sys.argv[count]))))
-        except:
+            printFrequencies(tokenize(str(sys.argv[count])))
+        except FileNotFoundError:
             print("Error! The following file does not exist:", str(sys.argv[count]))
 
         print("\n")
