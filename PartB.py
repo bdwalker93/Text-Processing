@@ -12,7 +12,7 @@ def generateTokenFrequencyMap(file_name1: str) -> {str, int}:
 
         # We split on anything that is not a comma, letter (case sensitive), or apostrophe
         for line in file:
-            for token in re.split('[^a-zA-Z0-9\']', line):
+            for token in re.split('[^a-zA-Z0-9]', line):
 
                 # Multiple split chars in a row cause an empty token to be shown
                 if token:
